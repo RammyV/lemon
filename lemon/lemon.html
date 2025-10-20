@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Button Sound</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f4f8;
+    }
+
+    img {
+      width: 200px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      border-radius: 12px;
+    }
+
+    img:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Replace "button-image.png" with your own image file -->
+  <img id="playImage" src="button-image.png" alt="Play Button" />
+
+  <audio id="sound" src="click.mp3"></audio>
+
+  <script>
+    const img = document.getElementById('playImage');
+    const sound = document.getElementById('sound');
+
+    img.addEventListener('click', () => {
+      sound.currentTime = 0; // restart sound if already playing
+      sound.play();
+    });
+  </script>
+
+</body>
+</html>
