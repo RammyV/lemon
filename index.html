@@ -3,14 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Image Button Sound</title>
+  <title>Image Button Sound with Counter</title>
   <style>
     body {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       background-color: #f0f4f8;
+      font-family: sans-serif;
     }
 
     img {
@@ -23,6 +25,28 @@
     img:hover {
       transform: scale(1.05);
     }
+
+    #counter {
+      margin-top: 20px;
+      font-size: 1.5rem;
+      color: #333;
+    }
+
+    #resetBtn {
+      margin-top: 10px;
+      padding: 8px 16px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #4f46e5;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #resetBtn:hover {
+      background-color: #3730a3;
+    }
   </style>
 </head>
 <body>
@@ -32,13 +56,35 @@
 
   <audio id="sound" src="click.mp3"></audio>
 
+  <!-- Counter display -->
+  <div id="counter">Button pressed: 0 times</div>
+
+  <!-- Optional reset button -->
+  <button id="resetBtn">Reset Counter</button>
+
   <script>
     const img = document.getElementById('playImage');
     const sound = document.getElementById('sound');
+    const counterDisplay = document.getElementById('counter');
+    const resetBtn = document.getElementById('resetBtn');
+
+    // Load saved count or default to 0
+    let count = localStorage.getItem('pressCount') ? parseInt(localStorage.getItem('pressCount')) : 0;
+    counterDisplay.textContent = `Button pressed: ${count} times`;
 
     img.addEventListener('click', () => {
       sound.currentTime = 0; // restart sound if already playing
       sound.play();
+
+      count++;
+      localStorage.setItem('pressCount', count);
+      counterDisplay.textContent = `Button pressed: ${count} times`;
+    });
+
+    resetBtn.addEventListener('click', () => {
+      count = 0;
+      localStorage.setItem('pressCount', count);
+      counterDisplay.textContent = `Button pressed: ${count} times`;
     });
   </script>
 
